@@ -1,0 +1,122 @@
+{% extends 'customer/base.html' %}
+
+{% block content %}
+<style>
+    /* Menu Header Styles */
+    .menu-header {
+        text-align: center;
+        margin-top: 50px;
+    }
+
+    /* Menu Search Styles */
+    .menu-search {
+        margin-top: 30px;
+        text-align: center;
+    }
+
+    /* Menu Card Container */
+    .menu-card-container {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-top: 30px;
+    }
+
+    /* Menu Card Styling */
+    .menu-card {
+        width: 250px; /* Ensures equal distribution */
+        height: auto;
+        background-color: rgba(255, 255, 255, 0.9); /* Transparent background */
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        padding: 10px;
+    }
+
+    /* Hover Effect for Menu Cards */
+    .menu-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Image Styling */
+    .menu-card img {
+        width: 100%;
+        height: 200px; /* Adjust the height for consistency */
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+    /* Title Styling */
+    .menu-card h5 {
+        margin-top: 10px;
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #333;
+    }
+
+    /* Description Styling */
+    .menu-card p {
+        margin: 5px 0;
+        font-size: 0.9rem;
+        color: #555;
+        text-align: center;
+    }
+
+    /* Price Styling */
+    .menu-card p.price {
+        font-size: 1rem;
+        font-weight: bold;
+        color: #007bff;
+    }
+
+    /* Media Query for Responsiveness */
+    @media (max-width: 768px) {
+        .menu-card-container {
+            justify-content: center;
+        }
+
+        .menu-card {
+            width: 180px; /* Adjust width for smaller screens */
+        }
+
+        .menu-card img {
+            height: 150px; /* Adjust image height for smaller screens */
+        }
+    }
+</style>
+
+<div class="container">
+    <!-- Header Section -->
+    <div class="menu-header">
+        <h1 style="color: #ff6f61;"><i>What's On Our Menu?</i></h1>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="menu-search">
+        <form method="GET" action="{% url 'menu-search' %}">
+            <div class="md-form mt-0 active-cyan-2">
+                <input class="form-control" name="q" type="text" placeholder="Search Our Menu" aria-label="Search" value="{{ request.GET.q }}">
+            </div>
+        </form>
+    </div>
+
+    <!-- Menu Items Section -->
+    <div class="menu-card-container">
+        {% for item in menu_items %}
+        <div class="menu-card">
+            <img src="{{ item.image.url }}" alt="{{ item.name }}">
+            <h5>{{ item.name }}</h5>
+            <p>{{ item.description }}</p>
+            <p class="price">Price: {{ item.price }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock content %}
